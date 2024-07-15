@@ -72,6 +72,7 @@ export import std;
 #define __has_builtin(...) __has_##__VA_ARGS__
 #endif
 
+#if not defined(__cpp_modules) or defined(BOOST_UT_DISABLE_MODULE)
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -104,6 +105,9 @@ export import std;
 #if __has_include(<source_location>)
 #include <source_location>
 #endif
+#endif 
+
+#include <cstdlib> // needed for __argc,__argv, apparently even when importing std
 
 struct unique_name_for_auto_detect_prefix_and_suffix_lenght_0123456789_struct_ {
 };

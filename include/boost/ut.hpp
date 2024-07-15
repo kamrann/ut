@@ -2776,7 +2776,11 @@ template <
   };
 }
 
-namespace terse {
+} // end ns operators
+} // end ns boost
+
+namespace boost::inline ext::ut::inline v2_0_1 {
+namespace operators::terse {
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wunused-comparison"
 #endif
@@ -2788,7 +2792,13 @@ template <class T>
 constexpr auto operator%(const T& t, const decltype(_t)&) {
   return detail::value<T>{t};
 }
+} // namespace operators::terse
+} // end ns boost
 
+BOOST_UT_EXPORT
+namespace boost::inline ext::ut::inline v2_0_1 {
+namespace operators {
+namespace terse {
 template <class T>
 inline auto operator>>(const T& t,
                        const detail::value_location<detail::fatal>&) {

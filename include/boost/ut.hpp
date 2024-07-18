@@ -91,10 +91,6 @@ export import std;
 #include <variant>
 #include <vector>
 #include <fstream>
-#if __has_include(<unistd.h>) and __has_include(<sys/wait.h>)
-#include <sys/wait.h>
-#include <unistd.h>
-#endif
 #if defined(__cpp_exceptions)
 #include <exception>
 #endif
@@ -108,6 +104,11 @@ export import std;
 #endif 
 
 #include <cstdlib> // needed for __argc,__argv, apparently even when importing std
+
+#if __has_include(<unistd.h>) and __has_include(<sys/wait.h>)
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
 
 struct unique_name_for_auto_detect_prefix_and_suffix_lenght_0123456789_struct_ {
 };

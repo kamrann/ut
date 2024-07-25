@@ -5,9 +5,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#if defined(__cpp_modules) && !defined(BOOST_UT_DISABLE_MODULE)
+#ifdef BOOST_UT_ENABLE_MODULE
 module;
-#define BOOST_UT_IS_MODULE
 #endif
 
 #if __has_include(<iso646.h>)
@@ -15,6 +14,11 @@ module;
 #endif
 
 #include <version>
+
+#if defined(BOOST_UT_ENABLE_MODULE) and not defined(__cpp_modules)
+#error BOOST_UT_ENABLE_MODULE was defined but toolchain does not support c++20 modules
+#endif
+
 #if defined(_MSC_VER)
 #pragma push_macro("min")
 #pragma push_macro("max")
@@ -68,7 +72,7 @@ module;
 #define __has_builtin(...) __has_##__VA_ARGS__
 #endif
 
-#if not defined(BOOST_UT_IS_MODULE)
+#if not defined(BOOST_UT_ENABLE_MODULE)
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -106,7 +110,7 @@ module;
 #include <unistd.h>
 #endif
 
-#if defined(BOOST_UT_IS_MODULE)
+#if defined(BOOST_UT_ENABLE_MODULE)
 export module boost.ut;
 import std;
 #define BOOST_UT_BEGIN_EXPORT export {

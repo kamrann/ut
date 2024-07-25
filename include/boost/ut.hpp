@@ -6,12 +6,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #if defined(__cpp_modules) && !defined(BOOST_UT_DISABLE_MODULE)
-export module boost.ut;
-export import std;
-#define BOOST_UT_EXPORT export
-#else
-#pragma once
-#define BOOST_UT_EXPORT
+module;
+#define BOOST_UT_IS_MODULE
 #endif
 
 #if __has_include(<iso646.h>)
@@ -72,6 +68,7 @@ export import std;
 #define __has_builtin(...) __has_##__VA_ARGS__
 #endif
 
+#if not defined(BOOST_UT_IS_MODULE)
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -90,10 +87,6 @@ export import std;
 #include <utility>
 #include <variant>
 #include <vector>
-#if __has_include(<unistd.h>) and __has_include(<sys/wait.h>)
-#include <sys/wait.h>
-#include <unistd.h>
-#endif
 #if defined(__cpp_exceptions)
 #include <exception>
 #endif
@@ -103,6 +96,23 @@ export import std;
 #endif
 #if __has_include(<source_location>)
 #include <source_location>
+#endif
+#endif
+
+#include <cstdlib> // needed for __argc,__argv even when importing std
+
+#if __has_include(<unistd.h>) and __has_include(<sys/wait.h>)
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
+#if defined(BOOST_UT_IS_MODULE)
+export module boost.ut;
+import std;
+#define BOOST_UT_EXPORT export
+#else
+#pragma once
+#define BOOST_UT_EXPORT
 #endif
 
 struct unique_name_for_auto_detect_prefix_and_suffix_lenght_0123456789_struct_ {

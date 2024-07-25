@@ -109,17 +109,19 @@ module;
 #if defined(BOOST_UT_IS_MODULE)
 export module boost.ut;
 import std;
-#define BOOST_UT_EXPORT export
+#define BOOST_UT_BEGIN_EXPORT export {
+#define BOOST_UT_END_EXPORT }
 #else
 #pragma once
-#define BOOST_UT_EXPORT
+#define BOOST_UT_BEGIN_EXPORT
+#define BOOST_UT_END_EXPORT
 #endif
 
 struct unique_name_for_auto_detect_prefix_and_suffix_lenght_0123456789_struct_ {
 };
 
-BOOST_UT_EXPORT
 namespace boost::inline ext::ut::inline v2_1_0 {
+BOOST_UT_BEGIN_EXPORT
 namespace utility {
 template <class>
 class function;
@@ -2639,8 +2641,10 @@ constexpr auto operator""_b(const char* name, decltype(sizeof("")) size) {
   return named{{name, size}, {}};
 }
 }  // namespace literals
+BOOST_UT_END_EXPORT
 
 namespace operators {
+BOOST_UT_BEGIN_EXPORT
 [[nodiscard]] constexpr auto operator==(std::string_view lhs,
                                         std::string_view rhs) {
   return detail::eq_{lhs, rhs};
@@ -2780,6 +2784,7 @@ template <class F, template <class...> class T, class... Ts,
         t);
   };
 }
+BOOST_UT_END_EXPORT
 
 namespace terse {
 #if defined(__clang__)
@@ -2794,6 +2799,7 @@ constexpr auto operator%(const T& t, const decltype(_t)&) {
   return detail::value<T>{t};
 }
 
+BOOST_UT_BEGIN_EXPORT
 template <class T>
 inline auto operator>>(const T& t,
                        const detail::value_location<detail::fatal>&) {
@@ -2986,10 +2992,11 @@ constexpr auto operator not(const T& t) {
   };
   return not_{t};
 }
-
+BOOST_UT_END_EXPORT
 }  // namespace terse
 }  // namespace operators
 
+BOOST_UT_BEGIN_EXPORT
 template <class TExpr, type_traits::requires_t<
                            type_traits::is_op_v<TExpr> or
                            type_traits::is_convertible_v<TExpr, bool>> = 0>
@@ -3334,6 +3341,8 @@ using operators::operator not;
 using operators::operator|;
 using operators::operator/;
 using operators::operator>>;
+
+BOOST_UT_END_EXPORT
 }  // namespace boost::inline ext::ut::inline v2_1_0
 
 #if (defined(__GNUC__) || defined(__clang__) || defined(__INTEL_COMPILER)) && \

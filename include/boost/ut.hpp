@@ -112,7 +112,7 @@ module;
 
 #if defined(BOOST_UT_ENABLE_MODULE)
 export module boost.ut;
-import std;
+export import std;
 #define BOOST_UT_BEGIN_EXPORT export {
 #define BOOST_UT_END_EXPORT }
 #else
